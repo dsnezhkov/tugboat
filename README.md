@@ -4,3 +4,7 @@ CC=$GCC CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build  -o tugboat.exe .
 
 
 ./bin/f2s -raw -compress -input ./plugin/comp_health/module.dll -output ./plugin/comp_health/module.hexbin
+
+```
+ git submodule add https://github.com/dsnezhkov/tugboat-components.git
+```
