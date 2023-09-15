@@ -1,0 +1,3 @@
+[submodule "tugboat-components"]
+	path = tugboat-components
+	url = https://dsnezhkov@github.com/dsnezhkov/tugboat-components.git

@@ -1,0 +1,106 @@
+global {
+
+  logger {
+    level    = "info"
+    location = "memfs://logs"
+  }
+  payloads "dynamic" {
+    location = "memfs://pays"
+  }
+  payloads "static" {
+    location = "embfs://plugins"
+  }
+}
+
+components {
+  // each component is an atomic execution entity
+  // it can be registered on a single vector
+  component "comp_tech" {
+    desc           = "Tech Description"
+    // TODO: OS support
+    type           = "pure"
+    active         = true
+    timeout        = 10 // seconds
+    directive      = "cmd.exe"
+    directive_opts = ["/c", "dir", "C:"]
+  }
+  component "comp_travel" {
+    desc           = "Travel Description"
+    type           = "pure"
+    active         = true
+    directive      = "cmd.exe"
+    directive_opts = ["/c", "dir"]
+    default_data   = ["some", "data"]
+  }
+  component "comp_health" {
+    desc   = "Health Description"
+    type   = "wrapper"
+    active = true
+
+    module "number_count" {
+      load "main1"{
+        source              = "embfs://plugins/comp_health/main.dll"
+        identifier          = "mpm.dll"
+        data_type           = "runtime"
+        native_format       = "binhex"
+        encapsulation {
+          encapsulation_order = "E:N:C"
+
+          encrypted {
+            algorithm = "AES256"
+            key       = "12345667890"
+          }
+          encoded {
+            variant = "base64"
+          }
+          compressed {
+            variant = "gz"
+          }
+        }
+      }
+      load "main2" {
+        source = "https://127.0.0.1:8000/main.dll"
+        identifier          = "mpk.dll"
+        data_type           = "data"
+        native_format       = "bin"
+      }
+    }
+    module "say_bye" {
+      load "main3" {
+        source = "embfs://plugins/comp_health/module2.hexbin"
+        identifier          = "mpz.dll"
+        data_type           = "data"
+        native_format       = "bin"
+      }
+    }
+  }
+}
+vectors {
+
+  // vector can have multiple components registered
+  // on a message bus
+  vector "tech" {
+    components = ["comp_tech"]
+  }
+  vector "travel" {
+    components = ["comp_travel", "comp_travel2"]
+  }
+  vector "health" {
+    components = ["comp_health"]
+  }
+}
+
+flows {
+  // workflow chain starts with vector
+  head = "tech"
+  // handoff from link from a vector to
+  // [vector,N]
+  // Note: data handoff to one or multiple vectors in parallel
+  from_vector "tech" {
+    to_vectors = ["travel"]
+  }
+  from_vector "travel" {
+    to_vectors = ["health"]
+  }
+}
+
