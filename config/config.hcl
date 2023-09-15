@@ -32,6 +32,14 @@ components {
     directive_opts = ["/c", "dir"]
     default_data   = ["some", "data"]
   }
+  component "comp_travel2" {
+    desc           = "Travel Description"
+    type           = "pure"
+    active         = true
+    directive      = "cmd.exe"
+    directive_opts = ["/c", "dir"]
+    default_data   = ["some", "data"]
+  }
   component "comp_health" {
     desc   = "Health Description"
     type   = "wrapper"

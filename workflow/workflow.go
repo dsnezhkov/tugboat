@@ -2,6 +2,7 @@ package workflow
 
 import (
 	"fmt"
+	"github.com/dsnezhkov/tugboat-components/travel2"
 	"github.com/dsnezhkov/tugboat/components/health"
 	"github.com/dsnezhkov/tugboat/components/tech"
 	"github.com/dsnezhkov/tugboat/components/travel"
@@ -128,6 +129,9 @@ func (workflow *WorkFlow) unwrapComponent(o *defs.IComponent, c *defs.Component)
 		ok = true
 	case c.Name == "comp_travel":
 		*o = defs.ComponentAvailable[(*c).Name].(*travel.ComponentTravel)
+		ok = true
+	case c.Name == "comp_travel2":
+		*o = defs.ComponentAvailable[(*c).Name].(*travel2.ComponentTravel2)
 		ok = true
 	case c.Name == "comp_health":
 		*o = defs.ComponentAvailable[(*c).Name].(*health.ComponentHealth)

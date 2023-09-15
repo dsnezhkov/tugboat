@@ -5,6 +5,7 @@ go 1.21.0
 require (
 	github.com/Binject/universal v0.0.0-20220519011857-bea739e758c0
 	github.com/blang/vfs v1.0.0
+	github.com/dsnezhkov/tugboat-components v0.0.0-20230915004010-3dbc841ab3a3
 	github.com/hashicorp/hcl/v2 v2.18.0
 	golang.org/x/sys v0.12.0
 )
