@@ -2,13 +2,13 @@ package workflow
 
 import (
 	"fmt"
+	"github.com/dsnezhkov/tugboat/components/health"
+	"github.com/dsnezhkov/tugboat/components/tech"
+	"github.com/dsnezhkov/tugboat/components/travel"
+	"github.com/dsnezhkov/tugboat/defs"
+	"github.com/dsnezhkov/tugboat/util"
 	"log"
 	"sync"
-	"tugboat/components/health"
-	"tugboat/components/tech"
-	"tugboat/components/travel"
-	"tugboat/defs"
-	"tugboat/util"
 )
 
 type WorkFlow struct{}

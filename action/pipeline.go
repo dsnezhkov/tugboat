@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"time"
 
-	"tugboat/defs"
+	"github.com/dsnezhkov/tugboat/defs"
 )
 
 func Handoff(topic string, msg defs.Message) {
@@ -32,11 +32,10 @@ func getMemUsage() string {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	// https://golang.org/pkg/runtime/#MemStats
-	stats := fmt.Sprintf("Alloc = %v MiB\tTotalAlloc = %v MiB\tSys = %v MiB\tNumGC = %v", bToMb(m.Alloc), bToMb(m.TotalAlloc),bToMb(m.Sys),m.NumGC )
+	stats := fmt.Sprintf("Alloc = %v MiB\tTotalAlloc = %v MiB\tSys = %v MiB\tNumGC = %v", bToMb(m.Alloc), bToMb(m.TotalAlloc), bToMb(m.Sys), m.NumGC)
 	return stats
 }
 
 func bToMb(b uint64) uint64 {
 	return b / 1024 / 1024
 }
-

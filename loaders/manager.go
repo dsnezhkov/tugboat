@@ -5,7 +5,7 @@ import (
 	"path"
 
 	"github.com/Binject/universal"
-	"tugboat/defs"
+	"github.com/dsnezhkov/tugboat/defs"
 )
 
 type TLoader interface {
@@ -25,18 +25,18 @@ func GetUniversalLoader() (*UniversalLoader, error) {
 
 	if uloader != nil {
 		return uloader, nil
-	}else{
+	} else {
 		uloader = &UniversalLoader{}
 		uloader.loader, err = universal.NewLoader()
 		if err != nil {
-			defs.Tlog.Log("Loader", "ERROR", fmt.Sprintf("UniversalLoader error: %v", err) )
+			defs.Tlog.Log("Loader", "ERROR", fmt.Sprintf("UniversalLoader error: %v", err))
 			return nil, err
 		}
 		return uloader, nil
 	}
 }
 
-func (uloader *UniversalLoader) Load(modulePath string ) (*universal.Library, error) {
+func (uloader *UniversalLoader) Load(modulePath string) (*universal.Library, error) {
 
 	var err error
 
@@ -52,17 +52,16 @@ func (uloader *UniversalLoader) Load(modulePath string ) (*universal.Library, er
 	return library, nil
 }
 
-func (uloader *UniversalLoader) getPayLoadContent(modulePath string ) ([]byte, error)  {
+func (uloader *UniversalLoader) getPayLoadContent(modulePath string) ([]byte, error) {
 	contentBytes, err := defs.PayManager.GetPayload(modulePath)
 	if err != nil {
-		defs.Tlog.Log("Loader", "ERROR", fmt.Sprintf("UniversalLoader error: %v", err) )
+		defs.Tlog.Log("Loader", "ERROR", fmt.Sprintf("UniversalLoader error: %v", err))
 		return nil, err
 	}
 	return contentBytes, nil
 }
 
-
-func (payman *UniversalLoader) RunExport(library *universal.Library, funcName string, args ...uintptr ) (uintptr, error) {
+func (payman *UniversalLoader) RunExport(library *universal.Library, funcName string, args ...uintptr) (uintptr, error) {
 
 	val, err := library.Call(funcName, args...)
 	if err != nil {
@@ -72,13 +71,12 @@ func (payman *UniversalLoader) RunExport(library *universal.Library, funcName st
 	return val, nil
 }
 
-
 func (payman *UniversalLoader) StatExport(library *universal.Library, funcName string) {
 
 	ptr, found := library.FindProc("Runme")
 	if found {
 		fmt.Printf("Name: %s Base: %d, FPtr: %v\n", library.Name, library.BaseAddress, ptr)
-	}else {
+	} else {
 		fmt.Printf("Export %s not found\n", funcName)
 	}
 

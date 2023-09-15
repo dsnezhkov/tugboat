@@ -7,44 +7,43 @@ import (
 	"strings"
 	"time"
 
-	"tugboat/fs"
+	"github.com/dsnezhkov/tugboat/fs"
 )
 
 type LogManager struct {
-	fsMan *fs.FSManager
-	logLevel string
+	fsMan       *fs.FSManager
+	logLevel    string
 	logLocation string
 }
 
 func CreateLogManager(fsm *fs.FSManager) *LogManager {
 	lm := &LogManager{
-		fsMan: fsm,
-		logLevel: "info",
+		fsMan:       fsm,
+		logLevel:    "info",
 		logLocation: "/logs",
 	}
 	return lm
 }
 
-func (logman *LogManager) SetLevel(level string){
+func (logman *LogManager) SetLevel(level string) {
 	logman.logLevel = level
 }
-func (logman *LogManager) SetLogLocation(location string){
+func (logman *LogManager) SetLogLocation(location string) {
 	re := regexp.MustCompile(`memfs:/(/.*)`)
 	matches := re.FindStringSubmatch(location)
 	if len(matches) == 2 {
 		logman.logLocation = matches[1]
-	}else{
+	} else {
 		log.Printf("Logger: invalid format of location: %v\n", matches)
 	}
 }
-func (logman *LogManager) GetLogLocation() string{
+func (logman *LogManager) GetLogLocation() string {
 	return logman.logLocation
 }
 
-func (logman *LogManager) Log(facility string, severity string, message string) bool{
+func (logman *LogManager) Log(facility string, severity string, message string) bool {
 
 	logfs := logman.fsMan.GetLogFS()
-
 
 	_, err := logman.fsMan.CheckIfMemDirExists(logfs, logman.logLocation)
 	if err != nil {
@@ -58,9 +57,8 @@ func (logman *LogManager) Log(facility string, severity string, message string) 
 		}
 	}
 
-
 	timeNowFmt := time.Now().Format("2006-01-02 15:04:05 MST")
-	logFileLocation := strings.Join([]string{logman.logLocation,facility}, "/")
+	logFileLocation := strings.Join([]string{logman.logLocation, facility}, "/")
 	logMessage := fmt.Sprintf("%-22s | %-8s| %-5s| %s\n", timeNowFmt, facility, severity, message)
 
 	//log.Printf("Logger: Logging to : %s with %s\n", logFileLocation, logMessage)

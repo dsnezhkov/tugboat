@@ -6,13 +6,13 @@ import (
 	"log"
 	"time"
 
-	"tugboat/action"
-	"tugboat/comms"
-	"tugboat/defs"
-	"tugboat/fs"
-	"tugboat/logger"
-	"tugboat/payloads"
-	"tugboat/workflow"
+	"github.com/dsnezhkov/tugboat/action"
+	"github.com/dsnezhkov/tugboat/comms"
+	"github.com/dsnezhkov/tugboat/defs"
+	"github.com/dsnezhkov/tugboat/fs"
+	"github.com/dsnezhkov/tugboat/logger"
+	"github.com/dsnezhkov/tugboat/payloads"
+	"github.com/dsnezhkov/tugboat/workflow"
 )
 
 // Embedding configuration within binary

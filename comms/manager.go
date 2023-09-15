@@ -1,13 +1,13 @@
 package comms
 
 import (
-	"tugboat/comms/http"
-	"tugboat/payloads"
+	"github.com/dsnezhkov/tugboat/comms/http"
+	"github.com/dsnezhkov/tugboat/payloads"
 )
 
 type CommsManager struct {
 	HttpComm *http.HttpComm
-	Payman *payloads.PayloadManager
+	Payman   *payloads.PayloadManager
 }
 
 type CommsManagerOptions struct {
@@ -21,11 +21,11 @@ func GetCommsManager() *CommsManager {
 }
 func CreateCommsManager(options CommsManagerOptions) *CommsManager {
 
-	if  commsManager == nil {
+	if commsManager == nil {
 
 		httpCommsOptions := http.HttpCommOptions{
 			Timeout: 10,
-			Payman: options.Payman,
+			Payman:  options.Payman,
 		}
 
 		commsManager = &CommsManager{
@@ -35,8 +35,6 @@ func CreateCommsManager(options CommsManagerOptions) *CommsManager {
 	return commsManager
 }
 
-func (comms *CommsManager) GetHTTPComm() *http.HttpComm{
+func (comms *CommsManager) GetHTTPComm() *http.HttpComm {
 	return comms.HttpComm
 }
-
-

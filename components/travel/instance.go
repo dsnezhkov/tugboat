@@ -5,11 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"tugboat/components/common"
-	"tugboat/defs"
-	"tugboat/logger"
+	"github.com/dsnezhkov/tugboat/components/common"
+	"github.com/dsnezhkov/tugboat/defs"
+	"github.com/dsnezhkov/tugboat/logger"
 )
-
 
 func init() {
 	name := "comp_travel"
@@ -95,7 +94,7 @@ func (component *ComponentTravel) InvokeComponent(
 		component.Tlog.Log(component.Name, "INFO", message)
 
 	case signalC := <-component.SignalChan:
-		message = fmt.Sprintf("Processing received signal: %v", signalC )
+		message = fmt.Sprintf("Processing received signal: %v", signalC)
 		component.Tlog.Log(component.Name, "INFO", message)
 		message = fmt.Sprintf("Partial output so far: \nsOut: %s\n sErr: %s", component.Sout.String(), component.Serr.String())
 		component.Tlog.Log(component.Name, "INFO", message)

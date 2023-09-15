@@ -3,14 +3,14 @@ package common
 import (
 	"strings"
 
-	"tugboat/defs"
-	"tugboat/logger"
+	"github.com/dsnezhkov/tugboat/defs"
+	"github.com/dsnezhkov/tugboat/logger"
 )
 
 type Component struct {
-	Name    string
-	Active  bool
-	Options defs.OpCmd
+	Name       string
+	Active     bool
+	Options    defs.OpCmd
 	SignalChan chan bool
 	Sout       strings.Builder
 	Serr       strings.Builder

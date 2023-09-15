@@ -8,12 +8,12 @@ import (
 	"strings"
 	"time"
 
-	"tugboat/payloads"
+	"github.com/dsnezhkov/tugboat/payloads"
 )
 
 type HttpComm struct {
 	HttpClient http.Client
-	Payman *payloads.PayloadManager
+	Payman     *payloads.PayloadManager
 }
 
 type Method int
@@ -26,8 +26,8 @@ const (
 var httpComm *HttpComm
 
 type HttpCommOptions struct {
-	Timeout time.Duration
-	Payman *payloads.PayloadManager
+	Timeout       time.Duration
+	Payman        *payloads.PayloadManager
 	SSLCertVerify bool
 }
 
@@ -84,7 +84,7 @@ func (httpc *HttpComm) Fetch2FS(url string, method Method, storePayToLoc string)
 		return 0, err
 	}
 
-	if storePayToLoc == ""  {
+	if storePayToLoc == "" {
 		ix := strings.LastIndex(url, "/")
 		storePayToLoc = url[ix:]
 	}

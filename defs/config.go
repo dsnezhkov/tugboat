@@ -6,17 +6,16 @@ import (
 	"log"
 	"strings"
 
+	"github.com/dsnezhkov/tugboat/fs"
 	"github.com/hashicorp/hcl/v2/hclsimple"
-	"tugboat/fs"
 )
-
 
 func NewFlowConfig() *Config {
 	c := &Config{}
 	return c
 }
 
-func (flowconf *Config) CreateFromConfig(fsm *fs.FSManager, cfgPath string ) {
+func (flowconf *Config) CreateFromConfig(fsm *fs.FSManager, cfgPath string) {
 	status, err := FlowConf.parseConfig(*fsm.GetConfigFS(),
 		strings.Join([]string{"config", cfgPath}, "/"))
 
@@ -26,7 +25,6 @@ func (flowconf *Config) CreateFromConfig(fsm *fs.FSManager, cfgPath string ) {
 	}
 	//fmt.Printf("%#v", FlowConf)
 }
-
 
 func (flowconf *Config) parseConfig(cfs embed.FS, filePath string) (bool, error) {
 
@@ -48,7 +46,7 @@ func (flowconf *Config) parseConfig(cfs embed.FS, filePath string) (bool, error)
 		log.Fatalf("Failed to load configuration: %s", err)
 	}
 	_, err = json.MarshalIndent(flowconf, "", "\t")
-	if err!= nil {
+	if err != nil {
 		log.Printf("json.MarshalIndent: %v", err)
 		return false, err
 	}
@@ -57,7 +55,7 @@ func (flowconf *Config) parseConfig(cfs embed.FS, filePath string) (bool, error)
 	return true, nil
 }
 
-func (flowconf *Config) PopulateAvailableVectors () {
+func (flowconf *Config) PopulateAvailableVectors() {
 
 	// Map subscriptions os component names to vectors
 	log.Println("Main: Creating component subscriptions to vectors - HCL ")
@@ -71,11 +69,11 @@ func (flowconf *Config) PopulateAvailableVectors () {
 		}
 	}
 }
-func (flowconf *Config) PopulateGlobalConfig () {
+func (flowconf *Config) PopulateGlobalConfig() {
 	log.Println("Main: Setting global options ")
 	Tlog.SetLevel(FlowConf.GlobalOpts.LoggerOpts.Level)
 	Tlog.SetLogLocation(FlowConf.GlobalOpts.LoggerOpts.Location)
-	for _, l := range FlowConf.GlobalOpts.PayloadOpts{
+	for _, l := range FlowConf.GlobalOpts.PayloadOpts {
 		err := PayManager.SetPayloadsLocation(l.Variant, l.Location)
 		if err != nil {
 			// TODO: get dynamic name of function for errors

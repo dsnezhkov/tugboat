@@ -3,7 +3,7 @@ package defs
 import (
 	"sync"
 
-	"tugboat/logger"
+	"github.com/dsnezhkov/tugboat/logger"
 )
 
 type Message struct {
@@ -37,7 +37,7 @@ type CModule struct {
 }
 type CLoad struct {
 	Name           string
-	Identifier       string
+	Identifier     string
 	DataType       string
 	NativeFormat   string
 	CEncapsulation *CLoadEncapsulation

@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"tugboat/fs"
+	"github.com/dsnezhkov/tugboat/fs"
 )
 
 type PayloadManager struct {
@@ -100,7 +100,7 @@ func (payman *PayloadManager) GetPayload(location string) ([]byte, error) {
 		return content, nil
 	}
 
-	err = fmt.Errorf("Unable to match locaton %s to available FS type\n", location )
+	err = fmt.Errorf("Unable to match locaton %s to available FS type\n", location)
 	return nil, err
 }
 

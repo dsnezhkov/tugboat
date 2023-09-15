@@ -7,10 +7,9 @@ import (
 	"time"
 
 	"C"
-	"tugboat/components/common"
-	"tugboat/defs"
-	// "tugboat/loaders/memload"
-	"tugboat/logger"
+	"github.com/dsnezhkov/tugboat/components/common"
+	"github.com/dsnezhkov/tugboat/defs"
+	"github.com/dsnezhkov/tugboat/logger"
 )
 
 func init() {
@@ -101,4 +100,3 @@ func (component *ComponentHealth) InvokeComponent(
 	}
 
 }
-

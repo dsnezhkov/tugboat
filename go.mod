@@ -1,4 +1,4 @@
-module tugboat
+module github.com/dsnezhkov/tugboat
 
 go 1.21.0
 

@@ -3,10 +3,10 @@ package defs
 import (
 	"sync"
 
-	"tugboat/comms"
-	"tugboat/fs"
-	"tugboat/logger"
-	"tugboat/payloads"
+	"github.com/dsnezhkov/tugboat/comms"
+	"github.com/dsnezhkov/tugboat/fs"
+	"github.com/dsnezhkov/tugboat/logger"
+	"github.com/dsnezhkov/tugboat/payloads"
 )
 
 const MAX_TIMEOUT = 86400 // 24hrs
@@ -24,9 +24,7 @@ var PayManager *payloads.PayloadManager
 var CommsManager *comms.CommsManager
 var Tlog *logger.LogManager
 
-
-var Chan2component  map[string]<-chan Message
+var Chan2component map[string]<-chan Message
 
 // Signal plane for component
 var ChanSignal2component map[string]chan bool
-

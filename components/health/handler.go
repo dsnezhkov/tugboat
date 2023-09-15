@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strings"
 
-	"tugboat/comms"
-	"tugboat/defs"
-	"tugboat/loaders"
-	"tugboat/util"
+	"github.com/dsnezhkov/tugboat/comms"
+	"github.com/dsnezhkov/tugboat/defs"
+	"github.com/dsnezhkov/tugboat/loaders"
+	"github.com/dsnezhkov/tugboat/util"
 )
 
 func (component *ComponentHealth) invoke(msg defs.Message, handoffTo []string) bool {
@@ -19,32 +19,29 @@ func (component *ComponentHealth) invoke(msg defs.Message, handoffTo []string) b
 	// Are we running 64 or 32 bit
 	const PtrSize = 32 << uintptr(^uintptr(0)>>63)
 
-
 	// Prepare loader if needed
 	uloader, err := loaders.GetUniversalLoader()
-	if err != nil || uloader == nil  {
+	if err != nil || uloader == nil {
 		logMessage = fmt.Sprintf("Universal loader is nil or error: %v", err)
 		component.Tlog.Log(component.Name, "ERROR", logMessage)
 		return false
 	}
 
-
 	util.ListModulesLoadsForMe(component)
 
 	//modulePath := "embfs://plugins/comp_health/main.dll"
 
-
 	var (
-			main2LoadSrcLoc string
-			main2LoadStoreNameLoc string
+		main2LoadSrcLoc       string
+		main2LoadStoreNameLoc string
 	)
 	if l, ok := util.GetModuleLoadchain(component, "number_count", "main2"); ok {
 		main2LoadSrcLoc = l.Source
 
-		if l.Identifier == ""  {
+		if l.Identifier == "" {
 			ix := strings.LastIndex(main2LoadSrcLoc, "/")
 			main2LoadStoreNameLoc = main2LoadSrcLoc[ix:]
-		}else{
+		} else {
 			main2LoadStoreNameLoc = l.Identifier
 		}
 	}
@@ -61,27 +58,24 @@ func (component *ComponentHealth) invoke(msg defs.Message, handoffTo []string) b
 	if err != nil {
 		fmt.Printf("Httpc fail: %s\n", err)
 		defs.Tlog.Log("main", "DEBUG", fmt.Sprintf("httpc fetch: %s", err))
-	}else{
+	} else {
 		fmt.Printf("Http Data fetched payload %d\n", written)
 	}
 
-
-	for _, p := range httpc.Payman.ListDynamicPayloads(){
-		for k,v := range p {
-			fmt.Printf("%s (%d)\n", k,v)
+	for _, p := range httpc.Payman.ListDynamicPayloads() {
+		for k, v := range p {
+			fmt.Printf("%s (%d)\n", k, v)
 		}
 	}
-
 
 	fmt.Printf("Loading %s from memory FS\n", main2LoadStoreNameLoc)
 	modulePath := "memfs://pays/" + main2LoadStoreNameLoc
 
-
 	library, err := uloader.Load(modulePath)
-	if err != nil || library == nil  {
+	if err != nil || library == nil {
 		logMessage = fmt.Sprintf("Universal loader unable to load module: %v", err)
 		component.Tlog.Log(component.Name, "ERROR", logMessage)
-		fmt.Printf("%s\n", logMessage )
+		fmt.Printf("%s\n", logMessage)
 		return false
 	}
 
@@ -96,8 +90,6 @@ func (component *ComponentHealth) invoke(msg defs.Message, handoffTo []string) b
 	fmt.Printf("Result: %v\n", result)
 	logMessage = fmt.Sprintf("Result: %v", result)
 	component.Tlog.Log(component.Name, "INFO", logMessage)
-
-
 
 	// 	// TODO: https://stackoverflow.com/questions/51925111/passing-string-to-syscalluintptr
 	// 	cb := windows.NewCallback(func() uintptr {
@@ -143,6 +135,3 @@ func (component *ComponentHealth) invoke(msg defs.Message, handoffTo []string) b
 
 	return true
 }
-
-
-
