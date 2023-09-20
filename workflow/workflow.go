@@ -165,13 +165,14 @@ func (workflow *WorkFlow) Setup() {
 
 		defs.Tlog.Log("workflow", "DEBUG", message)
 
-		//var o defs.IComponent
 		var o defs.IComponent
-		ok, msg := workflow.unwrapComponent(&o, &c)
-		if !ok {
-			defs.Tlog.Log("workflow", "ERROR", msg)
-			continue
-		}
+		//ok, msg := workflow.unwrapComponent(&o, &c)
+		//if !ok {
+		//	defs.Tlog.Log("workflow", "ERROR", msg)
+		//	continue
+		//}
+
+		o = defs.ComponentAvailable[c.Name]
 
 		// Process component
 		// Command directives and options
