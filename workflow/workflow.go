@@ -208,6 +208,10 @@ func (workflow *WorkFlow) Setup() {
 		o.SetLogger(defs.Tlog)
 		// Set active flag
 		o.SetActive(c.Active)
+
+		if !c.Active {
+			continue
+		}
 		message = fmt.Sprintf("Subscribing component %s to vector %+v\n", comp, vector)
 
 		defs.Tlog.Log("workflow", "DEBUG", message)

@@ -18,7 +18,6 @@ components {
   component "comp_tech" {
     desc           = "Tech Description"
     // TODO: OS support
-    type           = "pure"
     active         = true
     timeout        = 10 // seconds
     directive      = "cmd.exe"
@@ -26,7 +25,6 @@ components {
   }
   component "comp_travel" {
     desc           = "Travel Description"
-    type           = "pure"
     active         = true
     directive      = "cmd.exe"
     directive_opts = ["/c", "dir"]
@@ -34,7 +32,6 @@ components {
   }
   component "comp_travel2" {
     desc           = "Travel Description"
-    type           = "pure"
     active         = true
     directive      = "cmd.exe"
     directive_opts = ["/c", "dir"]
@@ -42,7 +39,6 @@ components {
   }
   component "comp_health" {
     desc   = "Health Description"
-    type   = "wrapper"
     active = true
 
     module "number_count" {
@@ -108,7 +104,7 @@ flows {
     to_vectors = ["travel"]
   }
   from_vector "travel" {
-    to_vectors = ["health"]
+    to_vectors = ["health", "travel2"]
   }
 }
 

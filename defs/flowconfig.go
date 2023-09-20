@@ -32,7 +32,6 @@ type Vector struct {
 type Component struct {
 	Name          string   `hcl:"name,label"`
 	Description   string   `hcl:"desc"`
-	Type          string   `hcl:"type"`
 	Active        bool     `hcl:"active"`
 	Timeout       int      `hcl:"timeout,optional"`
 	Directive     string   `hcl:"directive,optional"`
